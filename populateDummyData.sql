@@ -1,7 +1,7 @@
 INSERT INTO public.user
 (
   user_id, username, email, password, first_name, last_name,
-  bio, online, created_time
+  bio, session_id, created_time
 )
 SELECT id, 'user_' || id, 'user_' || id || '@' || (
     CASE (RANDOM() * 2)::INT
@@ -11,7 +11,13 @@ SELECT id, 'user_' || id, 'user_' || id || '@' || (
     END
   ) || '.com' AS email,
   'user_' || id || 'PW', 'user_' || id || 'FN', 'user_' || id || 'LN',
-  'user_' || id || 'BIO', true,
+  'user_' || id || 'BIO',
+  (
+   CASE (RANDOM() + 1)::INT
+      WHEN 1 THEN ''
+      WHEN 2 THEN md5(random()::text)
+    END
+  ),
   NOW() - '1 day'::INTERVAL * (RANDOM()* 1000 + 2000)::INT
 FROM generate_series(1,100) id;
 
