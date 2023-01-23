@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS public."user"
     first_name character varying(64) COLLATE pg_catalog."default" NOT NULL,
     last_name character varying(64) COLLATE pg_catalog."default" NOT NULL,
     bio character varying(512) COLLATE pg_catalog."default",
-    online boolean NOT NULL,
+    session_id character varying(512) COLLATE pg_catalog."default",
     created_time character varying COLLATE pg_catalog."default",
     CONSTRAINT user_pkey PRIMARY KEY (user_id)
 )
