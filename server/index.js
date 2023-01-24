@@ -2,11 +2,9 @@ const express = require('express');
 const app = express();
 const port = 3001;
 const models = require('./models.js');
-const router = require('./router')
+const router = require('./router.js')
 
-app.get('/', (req, res) => {
-  res.status(200).send('Hello World!');
-})
+app.use('/', router)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.`)
