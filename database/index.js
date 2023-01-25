@@ -4,8 +4,8 @@ const pool = new Pool({
   user: process.env.db_user,
   host: process.env.db_host,
   password: process.env.db_password,
-  port: '5432',
-  database: 'boc-slate-database',
+  port: process.env.db_port,
+  database: process.env.database
 });
 
 pool.on('error', (err, client) => {
