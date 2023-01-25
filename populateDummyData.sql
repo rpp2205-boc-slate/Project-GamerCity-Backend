@@ -19,7 +19,7 @@ SELECT id, 'user_' || id, 'user_' || id || '@' || (
     END
   ),
   NOW() - '1 day'::INTERVAL * (RANDOM()* 1000 + 2000)::INT
-FROM generate_series(1,100) id;
+FROM generate_series(1,1000) id;
 
 
 
@@ -33,7 +33,7 @@ SELECT id, (
       WHEN 2 THEN 'random group'||id
     END
   )
-FROM generate_series(1,100) id;
+FROM generate_series(1,1000) id;
 
 
 
@@ -42,7 +42,7 @@ INSERT INTO public.favgames
   id, user_id, game_id
 )
 SELECT id, (RANDOM() * 500)::INT, (RANDOM() * 10000)::INT
-FROM generate_series(1,100) id;
+FROM generate_series(1,1000) id;
 
 
 
@@ -65,7 +65,7 @@ SELECT id, (RANDOM() * 500)::INT, (RANDOM() * 500)::INT,
       WHEN 2 THEN false
     END
   )
-FROM generate_series(1,100) id;
+FROM generate_series(1,1000) id;
 
 
 
@@ -81,7 +81,7 @@ SELECT (RANDOM() * 500)::INT, (RANDOM() * 500)::INT,
       WHEN 2 THEN ( NOW() - '1 day'::INTERVAL * (RANDOM()* 100)::INT)
     END
   )
-FROM generate_series(1,100) id;
+FROM generate_series(1,1000) id;
 
 
 
@@ -101,7 +101,7 @@ SELECT id, (RANDOM() * 500)::INT,
   ),
   (RANDOM() * 500)::INT,
   NOW() - '1 day'::INTERVAL * (RANDOM()* 1000+1000)::INT
-FROM generate_series(1,1000) id;
+FROM generate_series(1,10000) id;
 
 
 
@@ -110,4 +110,4 @@ INSERT INTO public.profile_photos
   photo_id, user_id, photo_url
 )
 SELECT id, (RANDOM() * 100)::INT, 'https://picsum.photos/200'
-FROM generate_series(1,100) id;
+FROM generate_series(1,1000) id;

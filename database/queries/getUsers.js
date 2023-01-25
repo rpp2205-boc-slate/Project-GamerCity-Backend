@@ -4,7 +4,14 @@ module.exports = () => {
 
   const query = {
     text: `
-    SELECT user_id, username FROM public.user
+    SELECT json_agg(user_info) FROM (
+      SELECT user_id, username, created_time, (
+          SELECT coalesce(json_agg(photos), '[]'::json) FROM (
+            SELECT photo_id, photo_url FROM profile_photos WHERE user_id = public.user.user_id) photos
+        ) AS photos FROM public.user
+      ORDER BY created_time DESC
+      LIMIT 200
+      ) user_info;
     ;`
   }
 
@@ -25,4 +32,5 @@ module.exports = () => {
           return err.stack
         })
     })
+    .catch(err => {console.log(err)})
 }
