@@ -42,8 +42,7 @@ module.exports = (user_id) => {
       return client
         .query(query)
         .then(async res => {
-          const response = {};
-          response['users'] = res.rows[0].json_agg;
+          const response = res.rows[0].json_agg[0];
           client.release()
           return response
         })
