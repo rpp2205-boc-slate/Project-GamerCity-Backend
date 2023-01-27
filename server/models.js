@@ -2,6 +2,7 @@ const db_getUsers = require('../database/queries/getUsers.js');
 const db_getProfile = require('../database/queries/getProfile.js');
 const db_addFriend = require('../database/queries/addFriend.js');
 const db_respondFriend = require('../database/queries/respondFriend.js');
+const db_blockedFriend = require('../database/queries/blockedFriend.js');
 
 module.exports = {
   getUsers: (req, res) => {
@@ -42,6 +43,19 @@ module.exports = {
     const user2_id = req.params.user2_id;
     const respond = req.body.respond;
     db_respondFriend(user1_id, user2_id, respond)
+      .then(data => {
+        res.status(200).send(data)
+      })
+      .catch(err => {
+        res.status(500).send(err)
+      })
+  },
+
+  blockedFriend: (req, res) => {
+    const user1_id = req.params.user1_id;
+    const user2_id = req.params.user2_id;
+    const blocked = req.body.blocked;
+    db_blockedFriend(user1_id, user2_id, blocked)
       .then(data => {
         res.status(200).send(data)
       })

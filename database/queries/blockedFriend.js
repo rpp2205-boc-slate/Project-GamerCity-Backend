@@ -1,13 +1,14 @@
 const pool = require('../index.js');
 
-module.exports = (user1_id, user2_id, respond) => {
-  console.log('???', respond)
+module.exports = (user1_id, user2_id, blocked) => {
+  console.log(blocked)
   const query = {
     text: `
     UPDATE friend_relation
-    SET user1_req_user2='${respond}'
+    SET user1_blk_user2=${blocked}
     WHERE (user1_id=${user1_id}
     AND user2_id=${user2_id}
+    AND NOT user1_blk_user2=${blocked}
     );
     ;`
   }
