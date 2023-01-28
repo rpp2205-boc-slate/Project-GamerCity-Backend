@@ -12,7 +12,7 @@ module.exports = {
         res.status(200).send(data)
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(400).send(err)
       })
   },
 
@@ -23,7 +23,7 @@ module.exports = {
         res.status(200).send(data)
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(400).send(err)
       })
   },
 
@@ -32,10 +32,10 @@ module.exports = {
     const user2_id = req.params.user2_id;
     db_addFriend(user1_id, user2_id)
       .then(data => {
-        res.status(200).send(data)
+        res.status(201).send("CREATED")
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(400).send(err)
       })
   },
 
@@ -45,10 +45,10 @@ module.exports = {
     const respond = req.body.respond;
     db_respondFriend(user1_id, user2_id, respond)
       .then(data => {
-        res.status(200).send(data)
+        res.status(201).send("CREATED")
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(400).send(err)
       })
   },
 
@@ -58,10 +58,10 @@ module.exports = {
     const blocked = req.body.blocked;
     db_blockedFriend(user1_id, user2_id, blocked)
       .then(data => {
-        res.status(200).send(data)
+        res.status(201).send("CREATED")
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(400).send(err)
       })
   },
 
@@ -71,10 +71,10 @@ module.exports = {
     const liked = req.body.liked;
     db_blockedFriend(user_id, game_id, liked)
       .then(data => {
-        res.status(200).send(data)
+        res.status(201).send("CREATED")
       })
       .catch(err => {
-        res.status(500).send(err)
+        res.status(400).send(err)
       })
   }
 
