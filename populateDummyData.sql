@@ -41,8 +41,12 @@ INSERT INTO public.favgames
 (
   id, user_id, game_id
 )
-SELECT id, (RANDOM() * 500)::INT, (RANDOM() * 10000)::INT
-FROM generate_series(1,1000) id;
+SELECT id, (RANDOM() * 1000)::INT, (RANDOM() * 8000)::INT
+FROM generate_series(1,50000) id
+WHERE NOT EXISTS (
+select * from favgames
+	where user_id=favgames.user_id
+	and game_id=favgames.game_id);
 
 
 
