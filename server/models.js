@@ -3,6 +3,7 @@ const db_getProfile = require('../database/queries/getProfile.js');
 const db_addFriend = require('../database/queries/addFriend.js');
 const db_respondFriend = require('../database/queries/respondFriend.js');
 const db_blockedFriend = require('../database/queries/blockedFriend.js');
+const db_likeGame = require('../database/queries/likeGame.js');
 
 module.exports = {
   getUsers: (req, res) => {
@@ -56,6 +57,19 @@ module.exports = {
     const user2_id = req.params.user2_id;
     const blocked = req.body.blocked;
     db_blockedFriend(user1_id, user2_id, blocked)
+      .then(data => {
+        res.status(200).send(data)
+      })
+      .catch(err => {
+        res.status(500).send(err)
+      })
+  },
+
+  likeGame: (req, res) => {
+    const user_id = req.params.user_id;
+    const game_id = req.params.game_id;
+    const liked = req.body.liked;
+    db_blockedFriend(user_id, game_id, liked)
       .then(data => {
         res.status(200).send(data)
       })

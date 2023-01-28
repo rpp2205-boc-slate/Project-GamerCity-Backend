@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS public.favgames
     id integer NOT NULL,
     user_id integer NOT NULL,
     game_id integer NOT NULL,
+    liked boolean NOT NULL,
     CONSTRAINT favgames_pkey PRIMARY KEY (id)
 )
 

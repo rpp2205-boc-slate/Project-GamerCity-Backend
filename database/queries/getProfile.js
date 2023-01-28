@@ -10,7 +10,9 @@ module.exports = (user_id) => {
             SELECT photo_id, photo_url FROM profile_photos WHERE user_id = public.user.user_id) photos
         ) AS photos, (
           SELECT coalesce(json_agg(fav_games), '[]'::json) FROM (
-          SELECT game_id FROM favgames WHERE user_id = public.user.user_id) fav_games
+          SELECT game_id FROM favgames
+          WHERE user_id=public.user.user_id
+          AND liked=true) fav_games
       ) AS fav_games, (
         SELECT coalesce(json_agg(friends_list), '[]'::json) FROM (
           SELECT user2_id AS userid FROM public.friend_relation
