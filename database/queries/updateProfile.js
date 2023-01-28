@@ -1,13 +1,20 @@
 const pool = require('../index.js');
 
-module.exports = (user1_id, user2_id, respond) => {
+module.exports = (obj) => {
+  console.log(obj)
   const query = {
     text: `
-    UPDATE friend_relation
-    SET user1_req_user2='${respond}'
-    WHERE (user1_id=${user1_id}
-    AND user2_id=${user2_id}
-    );
+    UPDATE public.user
+    SET  first_name='${obj.first_name}',
+         last_name='${obj.last_name}',
+         bio='${obj.bio}'
+    WHERE public.user.username='test10081'
+    AND public.user.email='${obj.email}';
+    UPDATE profile_photos
+    SET photo_url='${obj.picture}'
+    WHERE user_id=(
+      SELECT user_id FROM public.user
+      WHERE public.user.username='${obj.name}')
     ;`
   }
 

@@ -4,6 +4,8 @@ const db_addFriend = require('../database/queries/addFriend.js');
 const db_respondFriend = require('../database/queries/respondFriend.js');
 const db_blockedFriend = require('../database/queries/blockedFriend.js');
 const db_likeGame = require('../database/queries/likeGame.js');
+const db_addUserInfo = require('../database/queries/addUserInfo.js');
+const db_updateProfile = require('../database/queries/updateProfile.js');
 
 module.exports = {
   getUsers: (req, res) => {
@@ -76,6 +78,28 @@ module.exports = {
       .catch(err => {
         res.status(400).send(err)
       })
-  }
+  },
 
+  addUserInfo: (req, res) => {
+    const username = req.body.name;
+    const email = req.body.email;
+    const photo = req.body.picture;
+    db_addUserInfo(username, email, photo)
+      .then(data => {
+        res.status(201).send("CREATED")
+      })
+      .catch(err => {
+        res.status(400).send(err)
+      })
+  },
+
+  updateProfile: (req, res) => {
+    db_updateProfile(req.body)
+      .then(data => {
+        res.status(201).send("CREATED")
+      })
+      .catch(err => {
+        res.status(400).send(err)
+      })
+  }
 }

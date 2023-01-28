@@ -39,9 +39,14 @@ FROM generate_series(1,1000) id;
 
 INSERT INTO public.favgames
 (
-  id, user_id, game_id
+  id, user_id, game_id, liked
 )
-SELECT id, (RANDOM() * 1000)::INT, (RANDOM() * 8000)::INT
+SELECT id, (RANDOM() * 1000)::INT, (RANDOM() * 8000)::INT, (
+   CASE (RANDOM() + 1)::INT
+      WHEN 1 THEN true
+      WHEN 2 THEN false
+    END
+  )
 FROM generate_series(1,50000) id
 WHERE NOT EXISTS (
 select * from favgames
