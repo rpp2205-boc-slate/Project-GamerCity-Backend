@@ -109,5 +109,14 @@ INSERT INTO public.profile_photos
 (
   photo_id, user_id, photo_url
 )
-SELECT id, (RANDOM() * 100)::INT, 'https://picsum.photos/200'
-FROM generate_series(1,1000) id;
+SELECT id, (RANDOM() * 1000)::INT, 'https://picsum.photos/200'
+FROM generate_series(1,1000) id
+WHERE NOT EXISTS(
+select user_id from profile_photos
+);
+INSERT INTO public.profile_photos
+(
+  photo_id, user_id, photo_url
+)
+SELECT id, (RANDOM() * 1000)::INT, 'https://picsum.photos/200'
+FROM generate_series(1001,3000) id;
