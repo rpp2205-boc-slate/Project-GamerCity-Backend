@@ -41,8 +41,12 @@ INSERT INTO public.favgames
 (
   id, user_id, game_id
 )
-SELECT id, (RANDOM() * 500)::INT, (RANDOM() * 10000)::INT
-FROM generate_series(1,1000) id;
+SELECT id, (RANDOM() * 1000)::INT, (RANDOM() * 8000)::INT
+FROM generate_series(1,50000) id
+WHERE NOT EXISTS (
+select * from favgames
+	where user_id=favgames.user_id
+	and game_id=favgames.game_id);
 
 
 
@@ -51,7 +55,7 @@ INSERT INTO public.friend_relation
   relation_id, user1_id, user2_id,
   user1_req_user2, user1_blk_user2
 )
-SELECT id, (RANDOM() * 500)::INT, (RANDOM() * 500)::INT,
+SELECT id, (RANDOM() * 1000)::INT, (RANDOM() * 1000)::INT,
   (
    CASE (RANDOM() * 2)::INT
       WHEN 0 THEN ''
@@ -65,7 +69,12 @@ SELECT id, (RANDOM() * 500)::INT, (RANDOM() * 500)::INT,
       WHEN 2 THEN false
     END
   )
-FROM generate_series(1,1000) id;
+FROM generate_series(1,50000) id
+WHERE NOT EXISTS(
+select * from friend_relation
+	where user1_id=friend_relation.user1_id
+	and user1_id=friend_relation.user1_id
+);
 
 
 
@@ -109,5 +118,14 @@ INSERT INTO public.profile_photos
 (
   photo_id, user_id, photo_url
 )
-SELECT id, (RANDOM() * 100)::INT, 'https://picsum.photos/200'
-FROM generate_series(1,1000) id;
+SELECT id, (RANDOM() * 1000)::INT, 'https://picsum.photos/200'
+FROM generate_series(1,1000) id
+WHERE NOT EXISTS(
+select user_id from profile_photos
+);
+INSERT INTO public.profile_photos
+(
+  photo_id, user_id, photo_url
+)
+SELECT id, (RANDOM() * 1000)::INT, 'https://picsum.photos/200'
+FROM generate_series(1001,3000) id;
