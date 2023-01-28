@@ -4,6 +4,7 @@ const db_addFriend = require('../database/queries/addFriend.js');
 const db_respondFriend = require('../database/queries/respondFriend.js');
 const db_blockedFriend = require('../database/queries/blockedFriend.js');
 const db_likeGame = require('../database/queries/likeGame.js');
+const db_addUserInfo = require('../database/queries/addUserInfo.js');
 
 module.exports = {
   getUsers: (req, res) => {
@@ -70,6 +71,20 @@ module.exports = {
     const game_id = req.params.game_id;
     const liked = req.body.liked;
     db_blockedFriend(user_id, game_id, liked)
+      .then(data => {
+        res.status(201).send("CREATED")
+      })
+      .catch(err => {
+        res.status(400).send(err)
+      })
+  },
+
+  addUserInfo: (req, res) => {
+    console.log(req.body)
+    const username = req.body.name;
+    const email = req.body.email;
+    const photo = req.body.picture;
+    db_addUserInfo(username, email, photo)
       .then(data => {
         res.status(201).send("CREATED")
       })
