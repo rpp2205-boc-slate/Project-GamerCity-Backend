@@ -51,7 +51,7 @@ INSERT INTO public.friend_relation
   relation_id, user1_id, user2_id,
   user1_req_user2, user1_blk_user2
 )
-SELECT id, (RANDOM() * 500)::INT, (RANDOM() * 500)::INT,
+SELECT id, (RANDOM() * 1000)::INT, (RANDOM() * 1000)::INT,
   (
    CASE (RANDOM() * 2)::INT
       WHEN 0 THEN ''
@@ -65,7 +65,12 @@ SELECT id, (RANDOM() * 500)::INT, (RANDOM() * 500)::INT,
       WHEN 2 THEN false
     END
   )
-FROM generate_series(1,1000) id;
+FROM generate_series(1,50000) id
+WHERE NOT EXISTS(
+select * from friend_relation
+	where user1_id=friend_relation.user1_id
+	and user1_id=friend_relation.user1_id
+);
 
 
 
