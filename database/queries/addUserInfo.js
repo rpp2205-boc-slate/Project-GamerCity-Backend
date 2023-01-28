@@ -15,7 +15,7 @@ module.exports = (username, email, photo) => {
     INSERT INTO profile_photos (photo_id, user_id, photo_url)
     SELECT (select max(photo_id) from profile_photos) + 1,
       (SELECT user_id FROM public.user
-        WHERE public.user.username='${username}'), ${photo}
+        WHERE public.user.username='${username}'), '${photo}'
     ;`
   }
 
