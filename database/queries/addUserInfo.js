@@ -16,6 +16,7 @@ module.exports = (username, email, photo) => {
     SELECT (select max(photo_id) from profile_photos) + 1,
       (SELECT user_id FROM public.user
         WHERE public.user.username='${username}'), '${photo}'
+    RETURNING user_id
     ;`
   }
 
@@ -25,7 +26,7 @@ module.exports = (username, email, photo) => {
       return client
         .query(query)
         .then(async res => {
-          const response = res.command
+          const response = res[0].rows[0]
           client.release()
           return response
         })
