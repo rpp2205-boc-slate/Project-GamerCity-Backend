@@ -86,7 +86,7 @@ module.exports = {
     const photo = req.body.picture;
     db_addUserInfo(username, email, photo)
       .then(data => {
-        res.status(201).send("CREATED")
+        res.status(201).send(data)
       })
       .catch(err => {
         res.status(400).send(err)
