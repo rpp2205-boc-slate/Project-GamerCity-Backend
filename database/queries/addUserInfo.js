@@ -1,4 +1,5 @@
 const pool = require('../index.js');
+const db_getProfile = require('./getProfile.js');
 
 module.exports = (username, email, photo) => {
   const query = {
@@ -28,9 +29,15 @@ module.exports = (username, email, photo) => {
       return client
         .query(query)
         .then(async res => {
-          const response = res[2].rows[0]
+          return db_getProfile(res[2].rows[0].user_id)
+            .then(async res => {
+              return res
+            })
+            .catch(err => {
+             console.log(err.stack)
+              return err.stack
+            })
           client.release()
-          return response
         })
         .catch(err => {
           client.release()
