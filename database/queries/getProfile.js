@@ -5,7 +5,7 @@ module.exports = (user_id) => {
   const query = {
     text: `
     SELECT json_agg(user_profile) FROM (
-      SELECT user_id, username, first_name, last_name, email, created_time, (
+      SELECT user_id, username, first_name, last_name, bio, email, created_time, (
           SELECT coalesce(json_agg(photos), '[]'::json) FROM (
             SELECT photo_id, photo_url FROM profile_photos WHERE user_id = public.user.user_id) photos
         ) AS photos, (

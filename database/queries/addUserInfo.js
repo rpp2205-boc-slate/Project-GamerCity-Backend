@@ -3,6 +3,8 @@ const pool = require('../index.js');
 module.exports = (username, email, photo) => {
   const query = {
     text: `
+    SELECT user_id FROM public.user
+    WHERE (public.user.username='${username}' AND public.user.email='${email}');
     INSERT INTO public.user (
       user_id, username, email, password, first_name, last_name,
       bio, session_id, created_time)
@@ -26,7 +28,7 @@ module.exports = (username, email, photo) => {
       return client
         .query(query)
         .then(async res => {
-          const response = res[0].rows[0]
+          const response = res[2].rows[0]
           client.release()
           return response
         })
