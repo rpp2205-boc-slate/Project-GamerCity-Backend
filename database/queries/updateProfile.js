@@ -8,7 +8,7 @@ module.exports = (obj) => {
     SET  first_name='${obj.first_name}',
          last_name='${obj.last_name}',
          bio='${obj.bio}'
-    WHERE public.user.username='test10081'
+    WHERE public.user.username='${obj.name}'
     AND public.user.email='${obj.email}';
     UPDATE profile_photos
     SET photo_url='${obj.picture}'
