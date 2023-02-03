@@ -71,7 +71,7 @@ module.exports = {
     const user_id = req.params.user_id;
     const game_id = req.params.game_id;
     const liked = req.body.liked;
-    db_blockedFriend(user_id, game_id, liked)
+    db_likeGame(user_id, game_id, liked)
       .then(data => {
         res.status(201).send("CREATED")
       })
