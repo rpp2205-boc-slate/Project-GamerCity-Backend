@@ -1,18 +1,17 @@
 const pool = require('../index.js');
 
 module.exports = (user_id, game_id, liked) => {
-console.log(user_id, game_id, liked)
   const query = {
     text: `
     UPDATE favgames
     SET liked=${liked}
     WHERE (user_id = ${user_id}
-      AND game_id=${game_id});
+      AND game_id='${game_id}');
     INSERT INTO favgames (id, user_id, game_id, liked)
-    SELECT (select max(id) from favgames) + 1, ${user_id}, ${game_id}, ${liked}
+    SELECT (select max(id) from favgames) + 1, ${user_id}, '${game_id}', ${liked}
     WHERE NOT EXISTS
     (SELECT * FROM favgames
-     WHERE (user_id=${user_id} AND game_id=${game_id}))
+     WHERE (user_id=${user_id} AND game_id='${game_id}'))
     ;`
   }
 
