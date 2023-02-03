@@ -19,6 +19,9 @@ module.exports = (username, email, photo) => {
     SELECT (select max(photo_id) from profile_photos) + 1,
       (SELECT user_id FROM public.user
         WHERE public.user.username='${username}'), '${photo}'
+    WHERE NOT EXISTS
+    (SELECT * FROM public.user
+    WHERE (public.user.username='${username}' OR public.user.email='${email}'))
     RETURNING user_id
     ;`
   }
@@ -31,13 +34,13 @@ module.exports = (username, email, photo) => {
         .then(async res => {
           return db_getProfile(res[2].rows[0].user_id)
             .then(async res => {
+              client.release()
               return res
             })
             .catch(err => {
              console.log(err.stack)
               return err.stack
             })
-          client.release()
         })
         .catch(err => {
           client.release()
