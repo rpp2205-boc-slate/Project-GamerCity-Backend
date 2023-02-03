@@ -19,9 +19,6 @@ module.exports = (username, email, photo) => {
     SELECT (select max(photo_id) from profile_photos) + 1,
       (SELECT user_id FROM public.user
         WHERE public.user.username='${username}'), '${photo}'
-    WHERE NOT EXISTS
-    (SELECT * FROM public.user
-    WHERE (public.user.username='${username}' OR public.user.email='${email}'))
     RETURNING user_id
     ;`
   }
