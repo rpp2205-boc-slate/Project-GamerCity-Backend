@@ -15,10 +15,13 @@ module.exports = (user_id) => {
           AND liked=true) fav_games
       ) AS fav_games, (
         SELECT coalesce(json_agg(friends_list), '[]'::json) FROM (
-          SELECT user1_id AS userid FROM public.friend_relation
-          WHERE user2_id=public.user.user_id
-          AND user1_req_user2='approved'
-          AND NOT user1_blk_user2=true) friends_list
+          SELECT user_id, username FROM public.user
+          WHERE user_id IN (
+            SELECT user1_id FROM public.friend_relation
+            WHERE user2_id=${user_id}
+            AND user1_req_user2='approved'
+            AND NOT user1_blk_user2=true)
+          ) friends_list
     ) AS friends, (
       SELECT coalesce(json_agg(blocked_list), '[]'::json) FROM (
         SELECT user2_id AS userid FROM public.friend_relation
