@@ -9,7 +9,8 @@ const db_updateProfile = require('../database/queries/updateProfile.js');
 
 module.exports = {
   getUsers: (req, res) => {
-    db_getUsers()
+    const keyword = req.params.keyword;
+    db_getUsers(keyword)
       .then(data => {
         res.status(200).send(data)
       })
@@ -94,15 +95,7 @@ module.exports = {
   },
 
   updateProfile: (req, res) => {
-    const obj = {
-    name: req.body.name,
-    email: req.body.email,
-    picture: req.body.picture,
-    first_name: req.body.first_name || '',
-    last_name: req.body.last_name || '',
-    bio: req.body.bio || ''
-    }
-    db_updateProfile(obj)
+    db_updateProfile(req.body)
       .then(data => {
         res.status(201).send("CREATED")
       })
