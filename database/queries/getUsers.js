@@ -1,6 +1,6 @@
 const pool = require('../index.js');
 
-module.exports = () => {
+module.exports = (keyword) => {
 
   const query = {
     text: `
@@ -9,6 +9,7 @@ module.exports = () => {
           SELECT coalesce(json_agg(photos), '[]'::json) FROM (
             SELECT photo_id, photo_url FROM profile_photos WHERE user_id = public.user.user_id) photos
         ) AS photos FROM public.user
+      WHERE public.user.username LIKE '%' || '${keyword}' || '%'
       ORDER BY created_time DESC
       LIMIT 200
       ) user_info;
