@@ -24,14 +24,20 @@ module.exports = (user_id) => {
           ) friends_list
     ) AS friends, (
       SELECT coalesce(json_agg(blocked_list), '[]'::json) FROM (
-        SELECT user2_id AS userid FROM public.friend_relation
-        WHERE user1_id=public.user.user_id
-        AND user1_blk_user2=true) blocked_list
+        SELECT user_id, username FROM public.user
+        WHERE user_id IN (
+          SELECT user2_id FROM public.friend_relation
+          WHERE user1_id=${user_id}
+          AND user1_blk_user2=true)
+      ) blocked_list
   ) AS blocked_users, (
     SELECT coalesce(json_agg(pending_req), '[]'::json) FROM (
-      SELECT user1_id AS userid FROM public.friend_relation
-      WHERE user2_id=public.user.user_id
-      AND user1_req_user2='pending') pending_req
+      SELECT user_id, username FROM public.user
+      WHERE user_id IN (
+        SELECT user1_id AS userid FROM public.friend_relation
+        WHERE user2_id=${user_id}
+        AND user1_req_user2='pending')
+    ) pending_req
 ) AS received_req_from
 
       FROM public.user
