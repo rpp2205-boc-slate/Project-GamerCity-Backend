@@ -5,8 +5,8 @@ module.exports = (user1_id, user2_id, respond) => {
     text: `
     UPDATE friend_relation
     SET user1_req_user2='${respond}'
-    WHERE (user1_id=${user1_id}
-    AND user2_id=${user2_id}
+    WHERE (user1_id=${user2_id}
+    AND user2_id=${user1_id}
     );
     ;`
   }
