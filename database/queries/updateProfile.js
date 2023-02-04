@@ -1,7 +1,6 @@
 const pool = require('../index.js');
 
 module.exports = (obj) => {
-  console.log(obj)
   const query = {
     text: `
     UPDATE public.user

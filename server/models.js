@@ -94,7 +94,15 @@ module.exports = {
   },
 
   updateProfile: (req, res) => {
-    db_updateProfile(req.body)
+    const obj = {
+    name: req.body.name,
+    email: req.body.email,
+    picture: req.body.picture,
+    first_name: req.body.first_name || '',
+    last_name: req.body.last_name || '',
+    bio: req.body.bio || ''
+    }
+    db_updateProfile(obj)
       .then(data => {
         res.status(201).send("CREATED")
       })
