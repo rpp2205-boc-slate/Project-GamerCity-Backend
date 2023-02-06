@@ -19,6 +19,7 @@ module.exports = (username, email, photo) => {
     SELECT (select max(photo_id) from profile_photos) + 1,
       (SELECT user_id FROM public.user
         WHERE public.user.username='${username}'), '${photo}'
+    ON CONFLICT DO NOTHING
     RETURNING user_id
     ;`
   }
@@ -29,7 +30,7 @@ module.exports = (username, email, photo) => {
       return client
         .query(query)
         .then(async res => {
-          return db_getProfile(res[2].rows[0].user_id)
+          return db_getProfile(res[0].rows[0].user_id || res[1].rows[0].user_id || res[2].rows[0].user_id)
             .then(async res => {
               client.release()
               return res
