@@ -33,7 +33,8 @@ module.exports = (username, email, photo) => {
       return client
         .query(query)
         .then(async res => {
-          return db_getProfile(res[0].rows[0].user_id || res[1].rows[0].user_id || res[2].rows[0].user_id)
+          const result = (res[0].rows[0] || res[1].rows[0] || res[2].rows[0]);
+          return db_getProfile(result.user_id)
             .then(async res => {
               client.release()
               return res
