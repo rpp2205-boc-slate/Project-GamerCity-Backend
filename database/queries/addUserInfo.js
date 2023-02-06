@@ -8,9 +8,9 @@ module.exports = (username, email, photo) => {
     WHERE (public.user.username='${username}' AND public.user.email='${email}');
     INSERT INTO public.user (
       user_id, username, email, password, first_name, last_name,
-      bio, session_id, created_time)
+      bio, session_id, created_time, isOnline)
     SELECT (select max(user_id) from public.user) + 1, '${username}', '${email}', '', '',
-	  '', '', '', NOW()
+	  '', '', '', NOW(), true
     WHERE NOT EXISTS
     (SELECT * FROM public.user
      WHERE (public.user.username='${username}' OR public.user.email='${email}'))
@@ -20,7 +20,10 @@ module.exports = (username, email, photo) => {
       (SELECT user_id FROM public.user
         WHERE public.user.username='${username}'), '${photo}'
     ON CONFLICT DO NOTHING
-    RETURNING user_id
+    RETURNING user_id;
+    UPDATE public.user
+    SET isonline=true
+    WHERE public.user.username='${username}';
     ;`
   }
 

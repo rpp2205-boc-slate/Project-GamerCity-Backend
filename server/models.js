@@ -6,6 +6,7 @@ const db_blockedFriend = require('../database/queries/blockedFriend.js');
 const db_likeGame = require('../database/queries/likeGame.js');
 const db_addUserInfo = require('../database/queries/addUserInfo.js');
 const db_updateProfile = require('../database/queries/updateProfile.js');
+const db_logout = require('../database/queries/logout.js');
 
 module.exports = {
   getUsers: (req, res) => {
@@ -96,6 +97,17 @@ module.exports = {
 
   updateProfile: (req, res) => {
     db_updateProfile(req.body)
+      .then(data => {
+        res.status(201).send("CREATED")
+      })
+      .catch(err => {
+        res.status(400).send(err)
+      })
+  },
+
+  logout: (req, res) => {
+    const userid = req.params.user_id
+    db_logout(userid)
       .then(data => {
         res.status(201).send("CREATED")
       })
