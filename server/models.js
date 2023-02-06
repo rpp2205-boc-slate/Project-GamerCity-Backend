@@ -109,7 +109,7 @@ module.exports = {
     const userid = req.params.user_id
     db_logout(userid)
       .then(data => {
-        res.status(201).send("CREATED")
+        res.status(204).send("NO CONTENT")
       })
       .catch(err => {
         res.status(400).send(err)
