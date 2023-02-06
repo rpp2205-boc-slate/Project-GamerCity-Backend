@@ -10,5 +10,6 @@ router.post('/friends/:user1_id/block/:user2_id', models.blockedFriend);
 router.post('/game/:user_id/:game_id', models.likeGame);
 router.post('/user/addinfo', models.addUserInfo);
 router.post('/user/:user_id/profile', models.updateProfile);
+router.put('/user/:user_id/logout', models.logout);
 
 module.exports = router;
